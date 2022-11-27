@@ -1,0 +1,8 @@
+creating an entity
+:php bin/console make:entity
+
+Migrate / generate the database
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
+If you edit an entity manually do this to regenrate
+php bin/console make:entity --regenerate

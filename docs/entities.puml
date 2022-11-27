@@ -1,0 +1,20 @@
+@startuml
+
+entity job {
+id
+status [scheduled|active|invoicing|to priced|completed]
+created
+client_name
+address
+client_contact_number
+}
+
+entity note {
+id
+job_id
+text
+created
+}
+
+note }-- job
+@enduml
