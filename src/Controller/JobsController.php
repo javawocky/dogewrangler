@@ -10,33 +10,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class HelloController extends AbstractController {
+class JobsController extends AbstractController {
 
 //    #[Route('/api/posts/{id}', methods: ['GET', 'HEAD'])]
 // routing here https://symfony.com/doc/current/routing.html
 // templates here https://symfony.com/doc/current/templates.html
 
     #[Route('/')]
-    public function index() {
-        $number = 7;
+    public function index(JobRepository $jobRepository) {
+        $jobs = $jobRepository->findAllByCreatedDescending();
         return $this->render('index/index.html.twig', [
-            'number' => $number,
-        ]);
-    }
-
-    #[Route('/{number}' ,
-        condition: "params['number'] < 1000"
-    )
-    ]
-    public function indext(int $number) {
-        return $this->render('index/index.html.twig', [
-            'number' => $number,
+            'jobs' => $jobs,
         ]);
     }
 
     #[Route('/jobs')]
     public function jobs(ManagerRegistry $doctrine, JobRepository $jobRepository) {
-        $job = $jobRepository->findAll();
+        $job = $jobRepository->findAllByCreatedDescending();
         return new Response($job[0]->getClientName());
     }
 

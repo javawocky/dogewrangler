@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Job
 {
     const SCHEDULED_STATUS = 'scheduled';
+    const INVOICEING_STATUS = 'invoicing';
+    const TO_PRICE_STATUS = 'to_price';
+    const COMPLETED_STATUS = 'completed';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

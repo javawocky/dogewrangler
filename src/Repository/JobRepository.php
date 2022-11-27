@@ -39,6 +39,16 @@ class JobRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByCreatedDescending(): array
+    {
+        $entityManager = $this->getEntityManager();
+        $query  = $entityManager->createQuery('
+        SELECT j
+        FROM App\Entity\Job j
+        ORDER BY j.created DESC');
+
+        return $query->getResult();
+    }
 //    /**
 //     * @return Job[] Returns an array of Job objects
 //     */
