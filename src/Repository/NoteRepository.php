@@ -39,7 +39,18 @@ class NoteRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
+    public function findAllByJobId(int $getId)
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.job_id = :val')
+            ->setParameter('val', $getId)
+            ->orderBy('n.created', 'ASC')
+//            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    //    /**
 //     * @return Note[] Returns an array of Note objects
 //     */
 //    public function findByExampleField($value): array
@@ -52,15 +63,6 @@ class NoteRepository extends ServiceEntityRepository
 //            ->getQuery()
 //            ->getResult()
 //        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Note
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
 //    }
 }

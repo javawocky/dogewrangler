@@ -16,7 +16,7 @@ class Note
 
     #[ORM\Column]
 //    #[ORM\ManyToOne(targetEntity: Job::class, inversedBy: 'job')]
-    private $job;
+    private $job_id;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $text = null;
