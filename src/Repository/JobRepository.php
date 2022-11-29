@@ -39,12 +39,19 @@ class JobRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllBy($field, $direction): array
+    public function findAllBy($field, $direction, $search): array
     {
         $entityManager = $this->getEntityManager();
 
-        $qb = $this->createQueryBuilder('j')
-            ->orderBy('j.'.$field, $direction);
+        $qb = $this->createQueryBuilder('j');
+        $qb    ->orderBy('j.'.$field, $direction);
+
+        if(isset($search) && strlen($search) > 0) {
+            $qb->andWhere('j.client_name like :sss 
+                or j.address like :sss
+                or j.contact_number like :sss');
+            $qb->setParameter('sss', '%'.$search.'%');
+        }
         $query = $qb->getQuery();
         return $query->execute();
     }

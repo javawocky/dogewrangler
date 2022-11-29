@@ -25,7 +25,8 @@ class JobsController extends AbstractController {
     public function index(JobRepository $jobRepository, Request $request) {
 
         $sort = $this->handleSort($request);
-        $jobs = $jobRepository->findAllBy($sort['active_field'], $sort[$sort['active_field']]);
+        $search = $request->get('search');
+        $jobs = $jobRepository->findAllBy($sort['active_field'], $sort[$sort['active_field']],$search);
 
 
         $statusOptions = [Job::SCHEDULED_STATUS,
@@ -36,7 +37,8 @@ class JobsController extends AbstractController {
         return $this->render('index/index.html.twig', [
             'jobs' => $jobs,
             'sort' => $sort,
-            'statusoptions' => $statusOptions
+            'statusoptions' => $statusOptions,
+            'search' => $search
         ]);
     }
 
@@ -100,22 +102,78 @@ class JobsController extends AbstractController {
         return new Response('Job clients name is '.$job->getClientName());
     }
 
-    #[Route('/test')]
+    #[Route('/note/edit/{jobId}/{noteId}', name: 'note_edit')]
+    public function editNote(int $jobId, $noteId,ManagerRegistry $doctrine,JobRepository $jobRepository, NoteRepository $noteRepository) {
+
+        if($noteId < 1) {
+            $note = new Note();
+            $note->setJobId($jobId);
+        } else {
+            $note = $noteRepository->find($noteId);
+        }
+
+        return $this->render('index/note_edit.html.twig', [
+            'jobId' => $jobId,
+            'notes' => $note,
+        ]);
+    }
+
+    #[Route('/note/save',methods: ['POST'])]
+    public function saveNote( Request $request,NoteRepository $noteRepository,ManagerRegistry $doctrine)
+    {
+
+        $noteId=$request->get('noteId');
+        $jobId=$request->get('jobId');
+
+        if ($noteId == null) {
+            $note = new Note();
+            $note->setCreated(new DateTime());
+            $note->setJobId($jobId);
+        }else {
+            $note = $noteRepository->find($noteId);
+        }
+
+        $note->setText($request->get('noteText'));
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($note);
+        $entityManager->flush();
+        return $this->redirectToRoute('notes_view', [
+            'id' => $note->getJobId(),
+        ]);
+    }
+
+
+    #[Route('/addsometestdatabycallingthis')]
     public function test(ManagerRegistry $doctrine, ValidatorInterface $validator) {
         $entityManager = $doctrine->getManager();
 
         $job = new Job();
-        $job->setClientName('Bob');
-        $job->setAddress('1 Boom staat');
+        $job->setClientName('Sally Sanders');
+        $job->setAddress('23 Cook Street');
         $job->setStatus(Job::SCHEDULED_STATUS);
         $job->setCreated(new DateTime());
-         $job->setContactNumber('0800838383');
+        $job->setContactNumber('0800838383');
 
-        // validate doesn't seam to work here
-        $errors = $validator->validate($job);
-        if (count($errors) > 0) {
-            return new Response((string) $errors, 400);
-        }
+        $entityManager->persist($job);
+        $entityManager->flush();
+
+        $job = new Job();
+        $job->setClientName('Bobby Smith');
+        $job->setAddress('5 Shortland Street');
+        $job->setStatus(Job::SCHEDULED_STATUS);
+        $job->setCreated(new DateTime());
+        $job->setContactNumber('09-555-3433');
+
+        $entityManager->persist($job);
+        $entityManager->flush();
+
+        $job = new Job();
+        $job->setClientName('Jeff Bingo');
+        $job->setAddress('76 Queen Street');
+        $job->setStatus(Job::SCHEDULED_STATUS);
+        $job->setCreated(new DateTime());
+        $job->setContactNumber('021-123-5322');
 
         $entityManager->persist($job);
         $entityManager->flush();
