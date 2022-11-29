@@ -18,7 +18,7 @@
         <li class="list-group-item col-4"><b>Client Name:</b> {{ job.clientName }}</li>
         <li class="list-group-item col-4"><b>Contact Number:</b> {{ job.contactNumber }}</li>
         <li class="list-group-item col-4"><b>Status:</b> {{ job.status }}</li>
-        <li class="list-group-item col-4"><b>Created:</b> {{ job.created|date('Y-m-d') }}</li>
+        <li class="list-group-item col-4"><b>Created:</b> {{ job.created|date('Y-m-d h:i:sa') }}</li>
     </ul>
     <br>
     <h5>Notes</h5>
@@ -35,7 +35,7 @@
                 <td>
                     {{ note.text }}
                 </td>
-                <td>{{ note.created|date('Y-m-d') }}</td>
+                <td>{{ note.created|date('Y-m-d h:i:sa') }}</td>
                 <td><a href="/note/edit/{{ job.id }}/{{ note.id }}"  class="fa-solid fa-pen"></a></td>
             </tr>
         {% endfor %}

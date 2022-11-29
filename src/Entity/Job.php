@@ -31,7 +31,7 @@ class Job
     #[ORM\Column(length: 255)]
     private ?string $contact_number = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created = null;
 
     public function getId(): ?int

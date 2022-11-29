@@ -18,6 +18,9 @@ Database
 ========
 Enter your database connection string in .env or .env.local.
 More info can be found here https://symfony.com/doc/current/configuration.html
+You may need to run the migration to create the tables
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
 
 Start the webserver
 ===================
