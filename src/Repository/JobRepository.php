@@ -41,8 +41,6 @@ class JobRepository extends ServiceEntityRepository
 
     public function findAllBy($field, $direction, $search): array
     {
-        $entityManager = $this->getEntityManager();
-
         $qb = $this->createQueryBuilder('j');
         $qb    ->orderBy('j.'.$field, $direction);
 

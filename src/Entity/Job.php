@@ -98,4 +98,14 @@ class Job
 
         return $this;
     }
+
+    public static function validateStatus(mixed $status) : bool
+    {
+        return ( $status == Job::COMPLETED_STATUS
+            || $status == Job::INVOICEING_STATUS
+            || $status == Job::TO_PRICE_STATUS
+            || $status == Job::SCHEDULED_STATUS
+        );
+    }
+
 }

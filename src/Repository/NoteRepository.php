@@ -45,24 +45,8 @@ class NoteRepository extends ServiceEntityRepository
             ->andWhere('n.job_id = :val')
             ->setParameter('val', $getId)
             ->orderBy('n.created', 'ASC')
-//            ->setMaxResults(10)
             ->getQuery()
             ->getResult();
     }
 
-    //    /**
-//     * @return Note[] Returns an array of Note objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-
-//    }
 }

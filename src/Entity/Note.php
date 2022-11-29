@@ -15,7 +15,6 @@ class Note
     private ?int $id = null;
 
     #[ORM\Column]
-//    #[ORM\ManyToOne(targetEntity: Job::class, inversedBy: 'job')]
     private $job_id;
 
     #[ORM\Column(type: Types::TEXT)]
