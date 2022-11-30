@@ -32,10 +32,10 @@
             <th>Status <a href="/?toggle=status"><i class="fa fa-fw fa-sort fa-sort-{{ sort.status }}"></i></a></th>
         </tr>
         {% for job in jobs %}
-            <tr onclick="window.location='/notes/{{ job.id }}';"><td>{{ job.id }}</td>
-                <td>{{ job.clientName }}</td>
-                <td>{{ job.contactNumber }}</td>
-                <td>{{ job.address }}</td>
+            <tr><td  onclick="window.location='/notes/{{ job.id }}';">{{ job.id }}</td>
+                <td onclick="window.location='/notes/{{ job.id }}';">{{ job.clientName }}</td>
+                <td onclick="window.location='/notes/{{ job.id }}';">{{ job.contactNumber }}</td>
+                <td onclick="window.location='/notes/{{ job.id }}';">{{ job.address }}</td>
                 <td>
                 <select id="statusoptions" onchange="sele(this.value,{{ job.id }});">
                     {% for o in statusoptions %}
